@@ -56,6 +56,7 @@ public class FirestationService {
         return firestationRepository.addFirestation(firestation);
     }
 
+
     public void deleteFirestation(String address) {
         firestationRepository.deleteFirestation(address);
     }
@@ -70,16 +71,14 @@ public class FirestationService {
     
 
     
-    public Firestation getFirestationByNumberAndAddress(String stationNumber, String address) throws NotFoundException {
+    public Firestation getFirestationByNumberAndAddress(String stationNumber, String address) throws NotFoundException 
+    {
         
-        List<Firestation> allFirestations = getAllFirestations();
-
-       
+        List<Firestation> allFirestations = getAllFirestations();   
         Optional<Firestation> firestationOpt = allFirestations.stream()
             .filter(firestation -> stationNumber.equals(firestation.getStation()) && address.equals(firestation.getAddress()))
             .findFirst();
 
-       
         return firestationOpt.orElseThrow(() -> new NotFoundException());
     }
     

@@ -46,7 +46,7 @@ public class PersonControllerTest {
     @Test
     void getAllPersons() throws Exception {
         Person person = new Person();
-        // set person fields
+      
         List<Person> persons = Arrays.asList(person);
         given(personService.getAllPersons()).willReturn(persons);
 
@@ -59,7 +59,7 @@ public class PersonControllerTest {
     @Test
     void getPersonByNameAndFirstName() throws Exception {
         Person person = new Person();
-        // set person fields
+      
         given(personService.getPersonByNameAndFirstName(anyString(), anyString())).willReturn(java.util.Optional.of(person));
 
         mockMvc.perform(get("/person/{firstName}/{lastName}", "firstName", "lastName"))
@@ -71,7 +71,7 @@ public class PersonControllerTest {
     @Test
     void addPerson() throws Exception {
         Person person = new Person();
-        // set person fields
+       
         given(personService.addPerson(any(Person.class))).willReturn(person);
 
         mockMvc.perform(post("/person")
@@ -85,10 +85,10 @@ public class PersonControllerTest {
     @Test
     public void testDeletePerson() throws Exception {
         // Arrange
-        String firstName = "John";
-        String lastName = "Doe";
+        String firstName = "david";
+        String lastName = "chaar";
 
-        // Act & Assert
+     
         mockMvc.perform(delete("/person/" + firstName + "/" + lastName))
                 .andExpect(status().isOk());
 
@@ -97,9 +97,9 @@ public class PersonControllerTest {
 
     @Test
     public void testUpdatePerson() throws Exception {
-        // Arrange
-        String firstName = "John";
-        String lastName = "Doe";
+        
+        String firstName = "david";
+        String lastName = "chaar";
 
         Person existingPerson = new Person();
         existingPerson.setFirstName(firstName);
@@ -108,12 +108,12 @@ public class PersonControllerTest {
         Person updatedPerson = new Person();
         updatedPerson.setFirstName(firstName);
         updatedPerson.setLastName(lastName);
-        // set any other updated fields on the updatedPerson object here
+       
 
         when(personService.getPersonByNameAndFirstName(firstName, lastName)).thenReturn(Optional.of(existingPerson));
         when(personService.updatePerson(existingPerson, updatedPerson)).thenReturn(updatedPerson);
 
-        // Act & Assert
+       
         mockMvc.perform(put("/person/" + firstName + "/" + lastName)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(new ObjectMapper().writeValueAsString(updatedPerson)))

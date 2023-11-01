@@ -55,35 +55,33 @@ public class PersonServiceTest {
 
     private void initPersonsAndMedicalRecords() {
         person1 = new Person();
-        person1.setFirstName("John");
-        person1.setLastName("Doe");
+        person1.setFirstName("David");
+        person1.setLastName("Chaar");
         person1.setCity("City1");
-        person1.setAddress("Address1");
-        person1.setEmail("john@example.com");
+        person1.setAddress("Rue Ordener");
+        person1.setEmail("david@gmail.com");
 
         person2 = new Person();
-        person2.setFirstName("Jane");
-        person2.setLastName("Doe");
+        person2.setFirstName("Nom");
+        person2.setLastName("Prenom");
         person2.setCity("City1");
-        person2.setAddress("Address2");
-        person2.setEmail("jane@example.com");
+        person2.setAddress("address2");
+        person2.setEmail("email2@gmail.com");
 
         medicalRecord1 = new MedicalRecord();
-        medicalRecord1.setFirstName("John");
-        medicalRecord1.setLastName("Doe");
+        medicalRecord1.setFirstName("David");
+        medicalRecord1.setLastName("Chaar");
         medicalRecord1.setBirthdate("07/17/2000");
         medicalRecord1.setMedications(Arrays.asList("med1", "med2"));
         medicalRecord1.setAllergies(Arrays.asList("allergy1", "allergy2"));
 
         medicalRecord2 = new MedicalRecord();
-        medicalRecord2.setFirstName("Jane");
-        medicalRecord2.setLastName("Doe");
+        medicalRecord2.setFirstName("Nom");
+        medicalRecord2.setLastName("Prenom");
         medicalRecord2.setBirthdate("07/17/2005");
         medicalRecord2.setMedications(Arrays.asList("med3", "med4"));
         medicalRecord2.setAllergies(Arrays.asList("allergy3", "allergy4"));
-
     }
-
 
     @Test
     public void getAllPersonsShouldReturnAllPersons() {
@@ -98,32 +96,27 @@ public class PersonServiceTest {
 
     @Test
     public void getPersonByNameAndFirstNameShouldReturnCorrectPerson() {
-        when(personRepository.getPersonByNameAndFirstName("John", "Doe")).thenReturn(person1);
+        when(personRepository.getPersonByNameAndFirstName("David", "Chaar")).thenReturn(person1);
 
-        Person person = personService.getPersonByNameAndFirstName("John", "Doe").get();
-
+        Person person = personService.getPersonByNameAndFirstName("David", "Chaar").get();
 
         assertEquals(person1, person);
     }
 
-    
-    // ... autres méthodes de test ici ...
-
     @Test
     public void getEmailByCityShouldReturnCorrectEmails() {
-        person1.setEmail("john.doe@email.com");
-        person2.setEmail("jane.doe@email.com");
+        person1.setEmail("david@gmail.com");
+        person2.setEmail("email2@gmail.com");
         
         when(personRepository.getPersonByCity("City1")).thenReturn(Arrays.asList(person1, person2));
 
         List<String> emails = personService.getEmailByCity("City1");
 
         assertEquals(2, emails.size());
-        assertEquals("john.doe@email.com", emails.get(0));
-        assertEquals("jane.doe@email.com", emails.get(1));
+        assertEquals("david@gmail.com", emails.get(0));
+        assertEquals("email2@gmail.com", emails.get(1));
     }
-
-
+    
     @Test
     public void addPersonShouldAddPersonIfNotExists() {
         Person person3 = new Person();
@@ -140,39 +133,53 @@ public class PersonServiceTest {
     }
 
     @Test
+    public void getPersonsByAddress() {
+        when(personRepository.getPersonsByAddress("Rue Ordener")).thenReturn(Arrays.asList(person1, person2));
+
+        List<Person> persons = personService.getPersonsByAddress("Rue Ordener");
+
+        assertEquals(2, persons.size());
+        assertEquals(person1, persons.get(0));
+        assertEquals(person2, persons.get(1));
+    }
+    
+    @Test
     public void deletePersonShouldDeleteCorrectPerson() {
         when(personRepository.getAllPersons()).thenReturn(Arrays.asList(person2));
-        doNothing().when(personRepository).deletePerson("John", "Doe");
+        doNothing().when(personRepository).deletePerson("David", "Chaar");
 
-        personService.deletePerson("John", "Doe");
+        personService.deletePerson("David", "Chaar");
 
         assertEquals(1, personService.getAllPersons().size());
         assertEquals(person2, personService.getAllPersons().get(0));
     }
-
-  
     
     @Test
     public void getPersonsByAddressShouldReturnPersonsAtCorrectAddress() {
-        when(personRepository.getPersonsByAddress("Address1")).thenReturn(Arrays.asList(person1));
+        when(personRepository.getPersonsByAddress("Rue Ordener")).thenReturn(Arrays.asList(person1));
 
-        List<Person> persons = personService.getPersonsByAddress("Address1");
+        List<Person> persons = personService.getPersonsByAddress("Rue Ordener");
 
         assertEquals(1, persons.size());
         assertEquals(person1, persons.get(0));
     }
 
+
     @Test
-    public void updatePersonShouldUpdateCorrectPerson() {
+    public void updatePersonS() {
         Person existingPerson = new Person();
-        existingPerson.setFirstName("John");
-        existingPerson.setLastName("Doe");
+        existingPerson.setFirstName("David");
+        existingPerson.setLastName("Chaar");
         existingPerson.setCity("City1");
+        existingPerson.setAddress("Rue Ordener");
+        existingPerson.setEmail("david@gmail.com");
 
         Person updatedPerson = new Person();
-        updatedPerson.setFirstName("John");
-        updatedPerson.setLastName("Doe");
+        updatedPerson.setFirstName("David");
+        updatedPerson.setLastName("Chaar");
         updatedPerson.setCity("City2");
+        updatedPerson.setAddress("Rue Ordener");
+        updatedPerson.setEmail("david@gmail.com");
 
         when(personRepository.updatePerson(existingPerson, updatedPerson)).thenReturn(updatedPerson);
 
@@ -189,132 +196,97 @@ public class PersonServiceTest {
         assertEquals(expectedAge, personService.calculateAge(birthdate));
     }
 
-
     @Test
     void getChildrenByAddress() {
-        // Prepare the mock responses
-    	
-    	 when(this.medicalRecordRepository.getMedicalRecordByName(anyString(), anyString()))
-         .thenReturn(Optional.of(new MedicalRecord()));
+        when(this.medicalRecordRepository.getMedicalRecordByName(anyString(), anyString()))
+            .thenReturn(Optional.of(new MedicalRecord()));
 
         List<Person> persons = new ArrayList<>();
         Person person = new Person();
-        person.setFirstName("John");
-        person.setLastName("Doe");
+        person.setFirstName("David");
+        person.setLastName("Chaar");
         persons.add(person);
-        
+
         MedicalRecord medicalRecord = new MedicalRecord();
         medicalRecord.setBirthdate("01/01/2006");
 
-        // Configure the mock behaviors
-        when(personRepository.getPersonsByAddress(anyString())).thenReturn(persons);
+        when(personRepository.getPersonsByAddress("Rue Ordener")).thenReturn(persons);
         when(medicalRecordRepository.getMedicalRecordByName(anyString(), anyString())).thenReturn(Optional.of(medicalRecord));
 
-        // Call the method to test
-        List<PersonInfo> children = personService.getChildrenByAddress("123 Street");
+        List<PersonInfo> children = personService.getChildrenByAddress("Rue Ordener");
 
-        // Verify the response
         assertEquals(1, children.size());
-        assertEquals("John", children.get(0).getFirstName());
-        assertEquals("Doe", children.get(0).getLastName());
+        assertEquals("David", children.get(0).getFirstName());
+        assertEquals("Chaar", children.get(0).getLastName());
 
-        // Verify the interactions with the mocks
-        verify(personRepository, times(1)).getPersonsByAddress("123 Street");
-        verify(medicalRecordRepository, times(1)).getMedicalRecordByName("John", "Doe");
+        verify(personRepository, times(1)).getPersonsByAddress("Rue Ordener");
+        verify(medicalRecordRepository, times(1)).getMedicalRecordByName("David", "Chaar");
     }
 
-  
-    @Test
-    public void testGetPersonByAddress() {
-        Person person = new Person();
-        person.setFirstName("John");
-        person.setLastName("Doe");
-        person.setAddress("123 Main St");
-        MedicalRecord medicalRecord = new MedicalRecord();
-        medicalRecord.setFirstName("John");
-        medicalRecord.setLastName("Doe");
-        medicalRecord.setBirthdate("01/01/2000");
-
-        when(personRepository.getPersonsByAddress("123 Main St")).thenReturn(Arrays.asList(person));
-        when(medicalRecordRepository.getMedicalRecordByName("John", "Doe")).thenReturn(Optional.of(medicalRecord));
-
-        List<PersonInfo> result = personService.getPersonByAddress("123 Main St");
-
-        assertEquals(1, result.size());
-        PersonInfo personInfo = result.get(0);
-        assertEquals("John", personInfo.getFirstName());
-        assertEquals("Doe", personInfo.getLastName());
-        assertEquals(23, personInfo.getAge());  // Assuming test is run in 2023
-
-        verify(personRepository).getPersonsByAddress("123 Main St");
-        verify(medicalRecordRepository).getMedicalRecordByName("John", "Doe");
-    }
-    
     @Test
     public void testGetPersonByAddressForFire() {
         Person person = new Person();
-        person.setFirstName("John");
-        person.setLastName("Doe");
-        person.setAddress("123 Main St");
+        person.setFirstName("David");
+        person.setLastName("Chaar");
+        person.setAddress("Rue Ordener");
         MedicalRecord medicalRecord = new MedicalRecord();
-        medicalRecord.setFirstName("John");
-        medicalRecord.setLastName("Doe");
+        medicalRecord.setFirstName("David");
+        medicalRecord.setLastName("Chaar");
         medicalRecord.setBirthdate("01/01/2000");
         medicalRecord.setMedications(Arrays.asList("Med1", "Med2"));
         medicalRecord.setAllergies(Arrays.asList("Allergy1", "Allergy2"));
 
-        when(personRepository.getPersonsByAddress("123 Main St")).thenReturn(Arrays.asList(person));
-        when(medicalRecordRepository.getMedicalRecordByName("John", "Doe")).thenReturn(Optional.of(medicalRecord));
+        when(personRepository.getPersonsByAddress("Rue Ordener")).thenReturn(Arrays.asList(person));
+        when(medicalRecordRepository.getMedicalRecordByName("David", "Chaar")).thenReturn(Optional.of(medicalRecord));
 
-        List<PersonInfo> result = personService.getPersonByAddressForFire("123 Main St");
+        List<PersonInfo> result = personService.getPersonByAddressForFire("Rue Ordener");
 
         assertEquals(1, result.size());
         PersonInfo personInfo = result.get(0);
-        assertEquals("John", personInfo.getFirstName());
-        assertEquals("Doe", personInfo.getLastName());
-        assertEquals(23, personInfo.getAge());  // Assuming test is run in 2023
+        assertEquals("David", personInfo.getFirstName());
+        assertEquals("Chaar", personInfo.getLastName());
+        assertEquals(23, personInfo.getAge());  
         assertEquals(Arrays.asList("Med1", "Med2"), personInfo.getMedications());
         assertEquals(Arrays.asList("Allergy1", "Allergy2"), personInfo.getAllergies());
 
-        verify(personRepository).getPersonsByAddress("123 Main St");
-        verify(medicalRecordRepository).getMedicalRecordByName("John", "Doe");
+        verify(personRepository).getPersonsByAddress("Rue Ordener");
+        verify(medicalRecordRepository).getMedicalRecordByName("David", "Chaar");
     }
-    
+
     @Test
     public void testGetPersonInfoByName() {
         Person person = new Person();
-        person.setFirstName("John");
-        person.setLastName("Doe");
-        person.setAddress("123 Main St");
-        person.setEmail("john.doe@example.com");
+        person.setFirstName("David");
+        person.setLastName("Chaar");
+        person.setAddress("Rue Ordener");
+        person.setEmail("david@gmail.com");
         MedicalRecord medicalRecord = new MedicalRecord();
-        medicalRecord.setFirstName("John");
-        medicalRecord.setLastName("Doe");
+        medicalRecord.setFirstName("David");
+        medicalRecord.setLastName("Chaar");
         medicalRecord.setBirthdate("01/01/2000");
         medicalRecord.setMedications(Arrays.asList("Med1", "Med2"));
         medicalRecord.setAllergies(Arrays.asList("Allergy1", "Allergy2"));
 
-        when(personRepository.getPersonByNameAndFirstName2("John", "Doe")).thenReturn(Arrays.asList(person));
-        when(medicalRecordRepository.getMedicalRecordByName("John", "Doe")).thenReturn(Optional.of(medicalRecord));
+        when(personRepository.getPersonByNameAndFirstName2("David", "Chaar")).thenReturn(Arrays.asList(person));
+        when(medicalRecordRepository.getMedicalRecordByName("David", "Chaar")).thenReturn(Optional.of(medicalRecord));
 
-        List<PersonInfo2> result = personService.getPersonInfoByName("John", "Doe");
+        List<PersonInfo2> result = personService.getPersonInfoByName("David", "Chaar");
 
         assertEquals(1, result.size());
         PersonInfo2 personInfo = result.get(0);
-        assertEquals("John", personInfo.getFirstName());
-        assertEquals("Doe", personInfo.getLastName());
-        assertEquals("123 Main St", personInfo.getAddress());
-        assertEquals("john.doe@example.com", personInfo.getEmail());
-        assertEquals(23, personInfo.getAge());  // Assuming test is run in 2023
+        assertEquals("David", personInfo.getFirstName());
+        assertEquals("Chaar", personInfo.getLastName());
+        assertEquals("Rue Ordener", personInfo.getAddress());
+        assertEquals("david@gmail.com", personInfo.getEmail());
+        assertEquals(23, personInfo.getAge());  
         assertEquals(Arrays.asList("Med1", "Med2"), personInfo.getMedications());
         assertEquals(Arrays.asList("Allergy1", "Allergy2"), personInfo.getAllergies());
 
-        verify(personRepository).getPersonByNameAndFirstName2("John", "Doe");
-        verify(medicalRecordRepository).getMedicalRecordByName("John", "Doe");
+        verify(personRepository).getPersonByNameAndFirstName2("David", "Chaar");
+        verify(medicalRecordRepository).getMedicalRecordByName("David", "Chaar");
     }
 
-
-    
+   
     
     
 }

@@ -45,6 +45,8 @@ public class MedicalRecordControllerTest {
 
         mockMvc.perform(get("/medicalRecord"))
                 .andExpect(status().isOk())
+               
+                
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].firstName", is(medicalRecord.getFirstName())));
     }
@@ -60,7 +62,7 @@ public class MedicalRecordControllerTest {
 
     @Test
     public void addMedicalRecordTest() throws Exception {
-        when(medicalRecordService.addMedicalRecord(org.mockito.ArgumentMatchers.<MedicalRecord>any())).thenReturn(medicalRecord);
+    	when(medicalRecordService.addMedicalRecord(Mockito.any(MedicalRecord.class))).thenReturn(medicalRecord);
 
         mockMvc.perform(post("/medicalRecord")
                 .contentType(MediaType.APPLICATION_JSON)

@@ -58,6 +58,8 @@ public class FirestationController {
         return firestations;
     }
 
+    
+    
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Firestation addFirestation(@RequestBody Firestation firestation) {
@@ -79,14 +81,14 @@ public class FirestationController {
 
     @PutMapping("/{stationNumber}/{address}")
     public Firestation updateFirestation(@PathVariable String stationNumber, @PathVariable String address, @RequestBody Firestation updatedFirestation) throws NotFoundException {
-        logger.info("Requête reçue pour mettre à jour la station de pompiers numéro : {} à l'adresse : {}", stationNumber, address);
+        logger.info("Requête reçue pour mettre à jour la numero station de pompiers : {} à l'adresse : {}", stationNumber, address);
         Firestation existingFirestation = firestationService.getFirestationByNumberAndAddress(stationNumber, address);
         return firestationService.updateFirestation(existingFirestation, updatedFirestation);
     }
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> getPersonsByStationNumber(@RequestParam String stationNumber) {
-        logger.info("Requête reçue pour obtenir des informations sur les personnes liées à la station de pompiers numéro : {}", stationNumber);
+        logger.info("Requête reçue pour obtenir des informations sur les personnes liées au numero station de pompiers  : {}", stationNumber);
         List<PersonInfo> personInfos = firestationService.getPersonsByStationNumber(stationNumber);
         
         List<PersonInfo> adults = personInfos.stream()
@@ -101,8 +103,8 @@ public class FirestationController {
         response.put("persons", personInfos);
         response.put("adultCount", adults.size());
         response.put("childrenCount", children.size());
-
-        logger.info("Réponse générée avec succès pour la station de pompiers numéro : {}", stationNumber);
+        
+        logger.info("Réponse générée avec succès pour numero station de pompiers  : {}", stationNumber);
         
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

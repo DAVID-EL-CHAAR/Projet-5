@@ -45,8 +45,10 @@ public class ChildAlertController {
         List<PersonInfo> children = personService.getChildrenByAddress(address);
         logger.debug("Nombre d'enfants trouvés : {}", children.size());
 
+        
         List<String> childNames = children.stream()
             .map(child -> child.getFirstName() + " " + child.getLastName())
+            
             .collect(Collectors.toList());
 
         

@@ -40,7 +40,9 @@ public class FloodController {
         List<String> addresses = firestationService.getAddressesByStationNumbers(stations);
 
         Map<String, Map<String, Object>> response = new LinkedHashMap<>();
+        
         for(String address : addresses) {
+        	
             List<PersonInfo> personInfos = personService.getPersonByAddressForFire(address);
 
             // Récupérer le numéro de station pour cette adresse

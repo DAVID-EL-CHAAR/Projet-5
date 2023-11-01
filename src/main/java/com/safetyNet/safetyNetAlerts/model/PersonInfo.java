@@ -13,7 +13,7 @@ public class PersonInfo {
     private List<String> medications;
     private List<String> allergies;
 
-    // Getter and setter methods
+   
     public String getFirstName() {
         return firstName;
     }

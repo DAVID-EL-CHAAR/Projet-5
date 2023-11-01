@@ -34,7 +34,7 @@ public class DataLoader {
         try {
             Data data = mapper.readValue(resource.getInputStream(), Data.class);
 
-            // Ajouter les données à chaque repository
+         
             personRepository.setPersons(data.getPersons());
             medicalRecordRepository.setMedicalRecords(data.getMedicalRecords());
             firestationRepository.setFirestations(data.getFirestations());

@@ -42,13 +42,6 @@ public class PersonService {
         return personRepository.getAllPersons();
     }
 
-    /*
-    public Person getPersonByNameAndFirstName(String firstName, String lastName) {
-        return personRepository.findByName(firstName, lastName);
-    }
-   */
-
-  
     public Optional<Person> getPersonByNameAndFirstName(String firstName, String lastName) {
         Person person = personRepository.getPersonByNameAndFirstName(firstName, lastName);
         return Optional.ofNullable(person);
@@ -57,7 +50,7 @@ public class PersonService {
     public Person addPerson(Person person) {
         return personRepository.addPerson(person);
     }
-
+          
     public void deletePerson(String firstName, String lastName) {
         personRepository.deletePerson(firstName, lastName);
     }
@@ -99,6 +92,12 @@ public class PersonService {
        
        */
     
+    /*
+    public Person getPersonByNameAndFirstName(String firstName, String lastName) {
+        return personRepository.findByName(firstName, lastName);
+    }
+   */
+    
     public int calculateAge(String birthdate) {
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate birthdateLocalDate = LocalDate.parse(birthdate, formatter);
@@ -119,7 +118,7 @@ public class PersonService {
                     PersonInfo personInfo = new PersonInfo();
                     personInfo.setFirstName(person.getFirstName());
                     personInfo.setLastName(person.getLastName());
-                    personInfo.setAge(age);
+                    personInfo.setAge(age);                                                  
                     personInfo.setAddress(person.getAddress()); 
                     personInfo.setPhone(person.getPhone()); 
                     personInfos.add(personInfo);
@@ -229,11 +228,12 @@ public class PersonService {
 	        String email = person.getEmail();
 	        emails.add(email);
 	    }
-
+                                                      
 	    return emails;
 	}
 
-   }
+
+}
     	
     
 

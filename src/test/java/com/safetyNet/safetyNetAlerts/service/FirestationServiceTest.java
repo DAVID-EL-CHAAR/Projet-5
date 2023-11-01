@@ -38,6 +38,7 @@ public class FirestationServiceTest {
     @Mock
     private MedicalRecordRepository medicalRecordRepository;
     
+   
     private FirestationService firestationService;
     
     @BeforeEach
@@ -56,10 +57,10 @@ public class FirestationServiceTest {
     
     @Test
     public void testGetFirestationByAddress() {
-        when(firestationRepository.getFirestationByAddress("123 Main St")).thenReturn(Arrays.asList(new Firestation()));
-        List<Firestation> result = firestationService.getFirestationByAddress("123 Main St");
+        when(firestationRepository.getFirestationByAddress("address6")).thenReturn(Arrays.asList(new Firestation()));
+        List<Firestation> result = firestationService.getFirestationByAddress("address6");
         assertEquals(1, result.size());
-        verify(firestationRepository).getFirestationByAddress("123 Main St");
+        verify(firestationRepository).getFirestationByAddress("address6");
     }
     
     @Test
@@ -167,30 +168,30 @@ public class FirestationServiceTest {
     public void testGetPersonsByStationNumber() {
         Firestation firestation = new Firestation();
         firestation.setStation("1");
-        firestation.setAddress("123 Main St");
+        firestation.setAddress("address6");
         Person person = new Person();
-        person.setFirstName("John");
-        person.setLastName("Doe");
-        person.setAddress("123 Main St");
+        person.setFirstName("david");
+        person.setLastName("chaar");
+        person.setAddress("address6");
         MedicalRecord medicalRecord = new MedicalRecord();
-        medicalRecord.setFirstName("John");
-        medicalRecord.setLastName("Doe");
+        medicalRecord.setFirstName("david");
+        medicalRecord.setLastName("chaar");
         medicalRecord.setBirthdate("01/01/2000");
 
         when(firestationRepository.getFirestationsByStation("1")).thenReturn(Arrays.asList(firestation));
-        when(personRepository.getPersonsByAddress("123 Main St")).thenReturn(Arrays.asList(person));
-        when(medicalRecordRepository.getMedicalRecordByName("John", "Doe")).thenReturn(Optional.of(medicalRecord));
+        when(personRepository.getPersonsByAddress("address6")).thenReturn(Arrays.asList(person));
+        when(medicalRecordRepository.getMedicalRecordByName("david", "chaar")).thenReturn(Optional.of(medicalRecord));
         List<PersonInfo> result = firestationService.getPersonsByStationNumber("1");
         
         assertEquals(1, result.size());
         PersonInfo personInfo = result.get(0);
-        assertEquals("John", personInfo.getFirstName());
-        assertEquals("Doe", personInfo.getLastName());
-        assertEquals(23, personInfo.getAge());  // Assuming test is run in 2023
+        assertEquals("david", personInfo.getFirstName());
+        assertEquals("chaar", personInfo.getLastName());
+        assertEquals(23, personInfo.getAge());  
 
         verify(firestationRepository).getFirestationsByStation("1");
-        verify(personRepository).getPersonsByAddress("123 Main St");
-        verify(medicalRecordRepository).getMedicalRecordByName("John", "Doe");
+        verify(personRepository).getPersonsByAddress("address6");
+        verify(medicalRecordRepository).getMedicalRecordByName("david", "chaar");
     }
     
   

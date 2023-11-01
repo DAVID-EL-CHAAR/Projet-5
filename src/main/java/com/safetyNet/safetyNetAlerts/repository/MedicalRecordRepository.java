@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+
 public class MedicalRecordRepository {
 
     private List<MedicalRecord> medicalRecords = new ArrayList<>();

@@ -31,6 +31,7 @@ public class FirestationControllerTest {
 
     private Firestation firestation;
 
+    
     @BeforeEach
     public void setUp() {
         firestation = new Firestation();
@@ -93,19 +94,17 @@ public class FirestationControllerTest {
     }
 
 
-    // Note: You may need to add additional setup in the testGetPersonsByStationNumber method
-    // to properly test the logic of that endpoint.
 
     @Test
     public void testGetPersonsByStationNumber() throws Exception {
-        // Arrange
+     
         PersonInfo personInfo = new PersonInfo();
-        // Set any properties on the personInfo object here
+       
         List<PersonInfo> personInfos = Arrays.asList(personInfo);
 
         when(firestationService.getPersonsByStationNumber(anyString())).thenReturn(personInfos);
 
-        // Act & Assert
+      
         mockMvc.perform(get("/firestation?stationNumber=1"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.persons", hasSize(1)));

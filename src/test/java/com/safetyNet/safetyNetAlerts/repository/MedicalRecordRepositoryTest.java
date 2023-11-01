@@ -1,3 +1,5 @@
+
+
 package com.safetyNet.safetyNetAlerts.repository;
 
 import com.safetyNet.safetyNetAlerts.model.MedicalRecord;
@@ -23,8 +25,8 @@ public class MedicalRecordRepositoryTest {
         medicalRecordRepository = new MedicalRecordRepository();
 
         record1 = new MedicalRecord();
-        record1.setFirstName("John");
-        record1.setLastName("Doe");
+        record1.setFirstName("David");
+        record1.setLastName("Chaar");
 
         record2 = new MedicalRecord();
         record2.setFirstName("Jane");
@@ -37,7 +39,6 @@ public class MedicalRecordRepositoryTest {
         medicalRecordRepository.setMedicalRecords(records);
     }
 
-
     @Test
     public void getAllMedicalRecordsShouldReturnAllRecords() {
         List<MedicalRecord> records = medicalRecordRepository.getAllMedicalRecords();
@@ -46,10 +47,10 @@ public class MedicalRecordRepositoryTest {
         assertEquals(record1, records.get(0));
         assertEquals(record2, records.get(1));
     }
-
+    
     @Test
     public void getMedicalRecordByNameShouldReturnCorrectRecord() {
-        Optional<MedicalRecord> record = medicalRecordRepository.getMedicalRecordByName("John", "Doe");
+        Optional<MedicalRecord> record = medicalRecordRepository.getMedicalRecordByName("David", "Chaar");
 
         assertTrue(record.isPresent());
         assertEquals(record1, record.get());
@@ -74,7 +75,7 @@ public class MedicalRecordRepositoryTest {
 
     @Test
     public void deleteMedicalRecordShouldDeleteCorrectRecord() {
-        medicalRecordRepository.deleteMedicalRecord("John", "Doe");
+        medicalRecordRepository.deleteMedicalRecord("David", "Chaar");
 
         assertEquals(1, medicalRecordRepository.getAllMedicalRecords().size());
         assertEquals(record2, medicalRecordRepository.getAllMedicalRecords().get(0));
@@ -88,8 +89,8 @@ public class MedicalRecordRepositoryTest {
     @Test
     public void updateMedicalRecordShouldUpdateCorrectRecord() {
         MedicalRecord updatedRecord = new MedicalRecord();
-        updatedRecord.setFirstName("John");
-        updatedRecord.setLastName("Doe");
+        updatedRecord.setFirstName("David");
+        updatedRecord.setLastName("Chaar");
 
         MedicalRecord record = medicalRecordRepository.updateMedicalRecord(record1, updatedRecord);
 
@@ -99,8 +100,8 @@ public class MedicalRecordRepositoryTest {
     @Test
     public void updateMedicalRecordShouldThrowExceptionIfNotExists() {
         MedicalRecord updatedRecord = new MedicalRecord();
-        updatedRecord.setFirstName("Alic");
-        updatedRecord.setLastName("Smit");
+        updatedRecord.setFirstName("Alice");
+        updatedRecord.setLastName("Smith");
 
         assertThrows(RuntimeException.class, () -> medicalRecordRepository.updateMedicalRecord(updatedRecord, updatedRecord));
     }

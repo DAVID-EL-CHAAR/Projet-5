@@ -32,8 +32,8 @@ public class PersonInfoControllerTest {
     @Test
     public void testGetPersonsByName() {
         // Arrange
-        String firstName = "John";
-        String lastName = "Doe";
+        String firstName = "david";
+        String lastName = "chaar";
         PersonInfo2 person1 = new PersonInfo2();
         person1.setFirstName(firstName);
         person1.setLastName(lastName);

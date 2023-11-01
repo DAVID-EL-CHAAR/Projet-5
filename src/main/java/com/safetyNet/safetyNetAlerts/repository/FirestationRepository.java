@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class FirestationRepository {
+	
     private List<Firestation> firestations = new ArrayList<>();
     
   
@@ -62,7 +63,9 @@ public class FirestationRepository {
         List<Firestation> firestations = getAllFirestations();
 
         for (Firestation existingFirestation : firestations) {
-            if (existingFirestation.getAddress().equals(firestation.getAddress())) {
+            if (existingFirestation.getAddress().equals
+            		
+            		(firestation.getAddress())) {
                 System.out.println("La caserne de pompiers existe déjà, impossible de l'ajouter.");
                 throw new IllegalArgumentException("La caserne de pompiers existe déjà");
             }
@@ -88,6 +91,7 @@ public class FirestationRepository {
     public void deleteFirestationByStation(String station) {
         firestations.removeIf(firestation -> firestation.getStation().equals(station));
     }
+    
 
     public Firestation updateFirestation(Firestation existingFirestation, Firestation updatedFirestation) {
         List<Firestation> firestations = getAllFirestations();
