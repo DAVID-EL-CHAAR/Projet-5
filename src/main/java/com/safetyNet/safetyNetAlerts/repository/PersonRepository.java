@@ -103,7 +103,7 @@ public class PersonRepository {
             
             return updatedPerson;
         } else {
-            throw new RuntimeException("Unable to find person to update.");
+            throw new RuntimeException("impossible de trouver la person a mettre a jour.");
         }
     }
     

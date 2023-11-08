@@ -53,7 +53,7 @@ public class FloodController {
                 continue;
             }
 
-            // Créer un nouveau Map pour stocker le numéro de station et les informations de la personne
+            // Création nouveau Map pour stocker le numéro de station et les informations de la personne
             Map<String, Object> addressInfo = new LinkedHashMap<>();
             addressInfo.put("stationNumber", stationNumber);
             addressInfo.put("persons", personInfos);

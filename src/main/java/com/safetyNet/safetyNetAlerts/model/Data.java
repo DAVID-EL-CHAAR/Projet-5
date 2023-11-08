@@ -15,7 +15,7 @@ public class Data {
 	    @JsonProperty("firestations")
 	    private List<Firestation> firestations;
 
-    // getters et setters pour chaque liste
+    
 
     public List<Person> getPersons() {
         return persons;

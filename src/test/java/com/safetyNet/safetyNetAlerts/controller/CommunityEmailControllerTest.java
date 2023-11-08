@@ -34,17 +34,16 @@ public class CommunityEmailControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(communityEmailController).build();
     }
 
-    @Test  // Cette annotation indique que la méthode qui suit est une méthode de test unitaire.
+    @Test  
     public void getEmailByCityTest() throws Exception {
         
-        // Définir une variable pour la ville de test.
+        //  variable pour la ville de test.
         String city = "TestCity";
         
         // Création d'une liste d'emails de test.
         List<String> emails = Arrays.asList("test1@test.com", "test2@test.com");
 
-        // Configuration des mocks : lorsque la méthode 'getEmailByCity' du 'personService' est appelée avec la ville 'TestCity', 
-        // elle doit retourner la liste 'emails'.
+        
         when(personService.getEmailByCity(city)).thenReturn(emails);
 
         // Simuler une requête HTTP GET à l'URL '/communityEmail' avec le paramètre 'city' et vérifier les réponses.
